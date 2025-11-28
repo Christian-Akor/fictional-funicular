@@ -16,12 +16,22 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 // Bubble Creation on Click
 const heroSection = document.querySelector('.hero');
 const bubblesContainer = document.getElementById('bubbles-container');
+const MAX_BUBBLES = 20;
+const activeBubbles = [];
 
 heroSection.addEventListener('click', (e) => {
     createBubble(e.clientX, e.clientY);
 });
 
 function createBubble(x, y) {
+    // Limit concurrent bubbles
+    if (activeBubbles.length >= MAX_BUBBLES) {
+        const oldBubble = activeBubbles.shift();
+        if (oldBubble && oldBubble.parentNode) {
+            oldBubble.remove();
+        }
+    }
+    
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
     
@@ -36,10 +46,17 @@ function createBubble(x, y) {
     bubble.style.background = `radial-gradient(circle at 30% 30%, ${randomColor}, ${randomColor}88)`;
     
     bubblesContainer.appendChild(bubble);
+    activeBubbles.push(bubble);
     
     // Remove bubble after animation
     setTimeout(() => {
-        bubble.remove();
+        const index = activeBubbles.indexOf(bubble);
+        if (index > -1) {
+            activeBubbles.splice(index, 1);
+        }
+        if (bubble.parentNode) {
+            bubble.remove();
+        }
     }, 3000);
 }
 
@@ -184,15 +201,48 @@ function handleReactionClick() {
     }
 }
 
-// Add some auto-bubbles for ambient effect
+// Add some auto-bubbles for ambient effect with visibility handling
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
+let ambientBubbleInterval;
+
+// Update cached dimensions on resize
+window.addEventListener('resize', () => {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+});
+
 function createAutoBubble() {
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight * 0.5 + window.innerHeight * 0.25;
+    const x = Math.random() * windowWidth;
+    const y = Math.random() * windowHeight * 0.5 + windowHeight * 0.25;
     createBubble(x, y);
 }
 
+// Start/stop ambient bubbles based on page visibility
+function startAmbientBubbles() {
+    if (!ambientBubbleInterval) {
+        ambientBubbleInterval = setInterval(createAutoBubble, 3000);
+    }
+}
+
+function stopAmbientBubbles() {
+    if (ambientBubbleInterval) {
+        clearInterval(ambientBubbleInterval);
+        ambientBubbleInterval = null;
+    }
+}
+
+// Handle page visibility changes
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        stopAmbientBubbles();
+    } else {
+        startAmbientBubbles();
+    }
+});
+
 // Create ambient bubbles periodically
-setInterval(createAutoBubble, 3000);
+startAmbientBubbles();
 
 // Smooth scroll for all anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
