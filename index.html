@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Zone - Interactive Playground</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">🎮 Fun Zone</div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="bounce">Welcome to Fun Zone! 🎉</h1>
+                <p>Click anywhere to create colorful bubbles!</p>
+                <button class="cta-button pulse" onclick="scrollToGames()">Play Games</button>
+            </div>
+            <div id="bubbles-container"></div>
+        </section>
+
+        <section id="games" class="games-section">
+            <h2>🎯 Mini Games</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">🎨</div>
+                    <h3>Color Clicker</h3>
+                    <p>Click the button to change colors!</p>
+                    <div id="color-box" class="color-box"></div>
+                    <button class="game-btn" onclick="changeColor()">Change Color</button>
+                    <p class="score">Clicks: <span id="color-clicks">0</span></p>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">🎲</div>
+                    <h3>Dice Roller</h3>
+                    <p>Roll the dice and test your luck!</p>
+                    <div id="dice" class="dice">🎲</div>
+                    <button class="game-btn" onclick="rollDice()">Roll!</button>
+                    <p class="result" id="dice-result">Roll to see result</p>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">🔢</div>
+                    <h3>Number Guesser</h3>
+                    <p>Guess a number between 1-10!</p>
+                    <input type="number" id="guess-input" min="1" max="10" placeholder="1-10">
+                    <button class="game-btn" onclick="guessNumber()">Guess!</button>
+                    <p class="result" id="guess-result">Make a guess!</p>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-icon">⏱️</div>
+                    <h3>Reaction Timer</h3>
+                    <p>Test your reaction speed!</p>
+                    <div id="reaction-box" class="reaction-box">Wait for green...</div>
+                    <button class="game-btn" id="reaction-btn" onclick="startReaction()">Start</button>
+                    <p class="result" id="reaction-result">Click Start to begin</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <h2>About Fun Zone 🌟</h2>
+            <div class="about-content">
+                <p>Fun Zone is your go-to place for quick, entertaining mini-games! 
+                   Built with love and designed to work perfectly on any device.</p>
+                <div class="features">
+                    <div class="feature">
+                        <span class="feature-icon">📱</span>
+                        <span>Mobile Friendly</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">💻</span>
+                        <span>Desktop Ready</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🎨</span>
+                        <span>Colorful Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❤️ for Fun | &copy; 2024 Fun Zone</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
